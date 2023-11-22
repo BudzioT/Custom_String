@@ -1,4 +1,4 @@
-Hi, this is my version of the class std::string (std::basic_string<char>) and the first ever project that I created. 
+<h2>Hi, this is my version of the class std::string (std::basic_string<char>) and the first ever project that I created.</h2>
 It probably has some errors in some places, but I'm pretty happy in terms of how it turned out. 
 
 It is pretty usable in most, not advanced cases.
