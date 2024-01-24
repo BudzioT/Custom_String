@@ -390,7 +390,7 @@ std::istream& getline(std::istream&& is, String& str);
 
 /******************************************** ITERATOR FUNCTIONS ********************************************/
 
-/* Dereferences the pointer */
+/* Dereference the pointer */
 template<bool constness>
 template<bool _constness> std::enable_if_t<_constness, typename String::Iterator<constness>::reference>
 String::Iterator<constness>::operator*() const
@@ -398,7 +398,7 @@ String::Iterator<constness>::operator*() const
 	return *m_cp;
 }
 
-/* Dereferences the pointer */
+/* Dereference the pointer */
 template<bool constness>
 template<bool _constness> std::enable_if_t<!_constness, typename String::Iterator<constness>::reference>
 String::Iterator<constness>::operator*()
@@ -406,7 +406,7 @@ String::Iterator<constness>::operator*()
 	return *m_cp;
 }
 
-/* Iterates one place forward */
+/* Iterate one place forward */
 template<typename bool constness>
 String::Iterator<constness>& String::Iterator<constness>::operator++()
 {
@@ -414,7 +414,7 @@ String::Iterator<constness>& String::Iterator<constness>::operator++()
 	return *this;
 }
 
-/* Iterates one place forward, returns the old pointer */
+/* Iterate one place forward, return the old pointer */
 template<typename bool constness>
 String::Iterator<constness> String::Iterator<constness>::operator++(int)
 {
@@ -423,7 +423,7 @@ String::Iterator<constness> String::Iterator<constness>::operator++(int)
 	return result;
 }
 
-/* Iterates one place backward */
+/* Iterate one place backward */
 template<typename bool constness>
 String::Iterator<constness>& String::Iterator<constness>::operator--()
 {
@@ -431,7 +431,7 @@ String::Iterator<constness>& String::Iterator<constness>::operator--()
 	return *this;
 }
 
-/* Iterates one place backward, returns the old pointer */
+/* Iterate one place backward, return the old pointer */
 template<typename bool constness>
 String::Iterator<constness> String::Iterator<constness>::operator--(int)
 {
@@ -440,7 +440,7 @@ String::Iterator<constness> String::Iterator<constness>::operator--(int)
 	return result;
 }
 
-/* Returns the dereferenced character at the given index */
+/* Return the dereferenced character at the given index */
 template<bool constness> template<bool _constness>
 std::enable_if_t<_constness, typename String::Iterator<constness>::reference>
 String::Iterator<constness>::operator[](size_t index) const
@@ -448,7 +448,7 @@ String::Iterator<constness>::operator[](size_t index) const
 	return *(m_cp + index);
 }
 
-/* Returns the dereferenced character at the given index */
+/* Return the dereferenced character at the given index */
 template<bool constness> template<bool _constness>
 std::enable_if_t<!_constness, typename String::Iterator<constness>::reference>
 String::Iterator<constness>::operator[](size_t index)
@@ -456,21 +456,21 @@ String::Iterator<constness>::operator[](size_t index)
 	return *(m_cp + index);
 }
 
-/* Returns the iterator, that's incremented (n) times */
+/* Return the iterator, that's incremented (n) times */
 template<bool constness>
 String::Iterator<constness> String::Iterator<constness>::operator+(size_t n) const
 {
 	return Iterator(m_cp + n);
 }
 
-/* Returns the iterator, that's decremented (n) times */
+/* Return the iterator, that's decremented (n) times */
 template<bool constness>
 String::Iterator<constness> String::Iterator<constness>::operator-(size_t n) const
 {
 	return Iterator(m_cp + n);
 }
 
-/* Moves this iterator forward (n) times */
+/* Move this iterator forward (n) times */
 template<bool constness>
 String::Iterator<constness>& String::Iterator<constness>::operator+=(size_t n)
 {
@@ -478,7 +478,7 @@ String::Iterator<constness>& String::Iterator<constness>::operator+=(size_t n)
 	return *this;
 }
 
-/* Moves this iterator backward (n) times */
+/* Move this iterator backward (n) times */
 template<bool constness>
 String::Iterator<constness>& String::Iterator<constness>::operator-=(size_t n)
 {
@@ -486,42 +486,42 @@ String::Iterator<constness>& String::Iterator<constness>::operator-=(size_t n)
 	return *this;
 }
 
-/* Checks if the iterators are equal to each other */
+/* Check if the iterators are equal to each other */
 template<bool constness>
 bool String::Iterator<constness>::operator==(const const_iterator& rhs) const
 {
 	return m_cp == rhs.m_cp;
 }
 
-/* Checks if the iterators aren't equal to each other */
+/* Check if the iterators aren't equal to each other */
 template<bool constness>
 bool String::Iterator<constness>::operator!=(const const_iterator& rhs) const
 {
 	return !(*this == rhs);
 }
 
-/* Checks if the first iterator is lesser than the second */
+/* Check if the first iterator is lesser than the second */
 template<bool constness>
 bool String::Iterator<constness>::operator<(const const_iterator& rhs) const
 {
 	return m_cp < rhs.m_cp;
 }
 
-/* Checks if the first iterator is lesser than or equal to the second */
+/* Check if the first iterator is lesser than or equal to the second */
 template<bool constness>
 bool String::Iterator<constness>::operator<=(const const_iterator& rhs) const
 {
 	return (*this < rhs) || (*this == rhs);
 }
 
-/* Checks if the first iterator is higher than the second */
+/* Check if the first iterator is higher than the second */
 template<bool constness>
 bool String::Iterator<constness>::operator>(const const_iterator& rhs) const
 {
 	return !(*this < rhs) && (*this != rhs);
 }
 
-/* Checks if the first iterator is higher than or equal to the second */
+/* Check if the first iterator is higher than or equal to the second */
 template<bool constness>
 bool String::Iterator<constness>::operator>=(const const_iterator& rhs) const
 {
@@ -529,7 +529,7 @@ bool String::Iterator<constness>::operator>=(const const_iterator& rhs) const
 }
 
 
-/* Iterates this reverse iterator "forwards"*/
+/* Iterate this reverse iterator "forwards"*/
 template <bool constness>
 String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operator++()
 {
@@ -537,7 +537,7 @@ String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operat
 	return *this;
 }
 
-/* Iterates this reverse iterator "forwards", returns the old reverse iterator */
+/* Iterate this reverse iterator "forwards", return the old reverse iterator */
 template <bool constness>
 String::Reverse_Iterator<constness> String::Reverse_Iterator<constness>::operator++(int)
 {
@@ -546,7 +546,7 @@ String::Reverse_Iterator<constness> String::Reverse_Iterator<constness>::operato
 	return result;
 }
 
-/* Iterates this reverse iterator "backwards" */
+/* Iterate this reverse iterator "backwards" */
 template <bool constness>
 String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operator--()
 {
@@ -554,7 +554,7 @@ String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operat
 	return *this;
 }
 
-/* Iterates this reverse iterator "backwards", returns the old reverse iterator */
+/* Iterate this reverse iterator "backwards", return the old reverse iterator */
 template <bool constness>
 String::Reverse_Iterator<constness> String::Reverse_Iterator<constness>::operator--(int)
 {
@@ -563,21 +563,21 @@ String::Reverse_Iterator<constness> String::Reverse_Iterator<constness>::operato
 	return result;
 }
 
-/* Moves the reverse iterator "fowards" (n) times, returns it */
+/* Move the reverse iterator "fowards" (n) times, return it */
 template<bool constness>
 String::Reverse_Iterator<constness> String::Reverse_Iterator<constness>::operator+(size_t n) const
 {
 	return Reverse_Iterator(m_cp - n);
 }
 
-/* Moves the reverse iterator "backwards" (n) times, returns it */
+/* Move the reverse iterator "backwards" (n) times, return it */
 template<bool constness>
 String::Reverse_Iterator<constness> String::Reverse_Iterator<constness>::operator-(size_t n) const
 {
 	return Reverse_Iterator(m_cp + n);
 }
 
-/* Moves this reverse iterator "fowards" (n) times, returns it*/
+/* Move this reverse iterator "fowards" (n) times, return it*/
 template<bool constness>
 String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operator+=(size_t n)
 {
@@ -585,7 +585,7 @@ String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operat
 	return *this;
 }
 
-/* Moves this reverse iterator "backwards" (n) times, returns it */
+/* Move this reverse iterator "backwards" (n) times, return it */
 template <bool constness>
 String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operator-=(size_t n)
 {
@@ -593,7 +593,7 @@ String::Reverse_Iterator<constness>& String::Reverse_Iterator<constness>::operat
 	return *this;
 }
 
-/* Dereferences this reverse iterator */
+/* Dereference this reverse iterator */
 template<bool constness> template<bool _constness> 
 std::enable_if_t<_constness, typename String::Reverse_Iterator<constness>::reference>
 String::Reverse_Iterator<constness>::operator*() const
@@ -601,7 +601,7 @@ String::Reverse_Iterator<constness>::operator*() const
 	return *m_cp;
 }
 
-/* Dereferences this reverse iterator */
+/* Dereference this reverse iterator */
 template<bool constness> template<bool _constness>
 std::enable_if_t<!_constness, typename String::Reverse_Iterator<constness>::reference>
 String::Reverse_Iterator<constness>::operator*()
@@ -609,7 +609,7 @@ String::Reverse_Iterator<constness>::operator*()
 	return *m_cp;
 }
 
-/* Returns the dereferenced character at the given index */
+/* Return the dereferenced character at the given index */
 template<bool constness> template<bool _constness>
 std::enable_if_t<_constness, typename String::Reverse_Iterator<constness>::reference>
 String::Reverse_Iterator<constness>::operator[](size_t index) const
@@ -617,7 +617,7 @@ String::Reverse_Iterator<constness>::operator[](size_t index) const
 	return *(m_cp + index);
 }
 
-/* Returns the dereferenced character at the given index */
+/* Return the dereferenced character at the given index */
 template<bool constness> template<bool _constness>
 std::enable_if_t<!_constness, typename String::Reverse_Iterator<constness>::reference>
 String::Reverse_Iterator<constness>::operator[](size_t index)
@@ -625,42 +625,42 @@ String::Reverse_Iterator<constness>::operator[](size_t index)
 	return *(m_cp + index);
 }
 
-/* Checks if both reverse iterators are equal to each other */
+/* Check if both reverse iterators are equal to each other */
 template <bool constness>
 bool String::Reverse_Iterator<constness>::operator==(const const_reverse_iterator& rhs) const
 {
 	return (m_cp == rhs.m_cp);
 }
 
-/* Checks if both reverse iterators aren't equal to each other */
+/* Check if both reverse iterators aren't equal to each other */
 template <bool constness>
 bool String::Reverse_Iterator<constness>::operator!=(const const_reverse_iterator& rhs) const
 {
 	return !(*this == rhs);
 }
 
-/* Checks if this reverse iterator is lesser than the second */
+/* Check if this reverse iterator is lesser than the second */
 template <bool constness>
 bool String::Reverse_Iterator<constness>::operator<(const const_reverse_iterator& rhs) const
 {
 	return m_cp < rhs.m_cp;
 }
 
-/* Checks if this reverse iterator is lesser than or equal to the second */
+/* Check if this reverse iterator is lesser than or equal to the second */
 template <bool constness>
 bool String::Reverse_Iterator<constness>::operator<=(const const_reverse_iterator& rhs) const
 {
 	return (*this < rhs) || (*this == rhs);
 }
 
-/* Checks if this reverse iterator is higher than the second */
+/* Check if this reverse iterator is higher than the second */
 template <bool constness>
 bool String::Reverse_Iterator<constness>::operator>(const const_reverse_iterator& rhs) const
 {
 	return (*this != rhs) && !(*this < rhs);
 }
 
-/* Checks if this reverse iterator is higher than or equal to the second */
+/* Check if this reverse iterator is higher than or equal to the second */
 template <bool constness>
 bool String::Reverse_Iterator<constness>::operator>=(const const_reverse_iterator& rhs) const
 {
@@ -669,7 +669,7 @@ bool String::Reverse_Iterator<constness>::operator>=(const const_reverse_iterato
 
 /************************************* STRING ITERATOR FUNCTIONS ****************************************/
 
-/* Creates String from two the range in between two input iterators */
+/* Create String from two the range in between two input iterators */
 template<typename InputIterator> String::String(InputIterator first, InputIterator last)
 {
 	size_t size = 0;
@@ -683,7 +683,7 @@ template<typename InputIterator> String::String(InputIterator first, InputIterat
 		alloc.construct(cp + i, *beg);
 }
 
-/* Appends the String created from the given range, to this String */
+/* Append the String created from the given range, to this String */
 template<typename InputIterator> String& String::append(InputIterator first, InputIterator last)
 {
 	size_t itSize = 0;
@@ -710,7 +710,7 @@ template<typename InputIterator> String& String::append(InputIterator first, Inp
 	return *this;
 }
 
-/* Assigns this String to the String created from the given range */
+/* Assign this String to the String created from the given range */
 template<typename InputIterator> String& String::assign(InputIterator first, InputIterator last)
 {
 	size_t itSize = 0;
@@ -735,7 +735,7 @@ template<typename InputIterator> String& String::assign(InputIterator first, Inp
 	return *this;
 }
 
-/* Inserts the characters from the given range into the place where iterator points to */
+/* Insert the characters from the given range into the place where iterator points to */
 template<typename InputIterator> 
 String::iterator String::insert(iterator p, InputIterator first, InputIterator last)
 {
@@ -783,7 +783,7 @@ String::iterator String::insert(iterator p, InputIterator first, InputIterator l
 	return (begin() + index + rangeSize);
 }
 
-/* Replaces the given range with characters from the second range */
+/* Replace the given range with characters from the second range */
 template<typename InputIterator>
 String& String::replace(const_iterator i1, const_iterator i2, InputIterator first, InputIterator last)
 {
