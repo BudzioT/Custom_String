@@ -17,20 +17,20 @@ using std::initializer_list;
 
 allocator<char> String::alloc;
 
-//Allocate new memory, and move the text to the new place
+/* Allocate new memory, and move the text to the new place */
 void String::reallocate()
 {
 	size_t s = sz ? sz * 2 : 1;
 	char* newBeg = alloc.allocate(s);
 	char* oldBeg = cp, *temp = newBeg;
 	for (size_t i = 0; i < sz; i++)
-		alloc.construct(newBeg++, std::move(*oldBeg++)); //Moves the text from the old place to the new
+		alloc.construct(newBeg++, std::move(*oldBeg++)); // Move the text from the old place to the new
 	free();
-	cp = newBeg; //changes pointer to new allocator
+	cp = newBeg; // Change pointer to new allocator
 	cap = s;
 }
 
-//Destruct elements, free memory
+/* Destruct elements, free memory */
 void String::free()
 {
 	if (cp) {
@@ -42,27 +42,27 @@ void String::free()
 	sz = cap = 0;
 }
 
-//Copy text from const char*
+/* Copy text from const char* */
 String::String(const char* ptr) : sz(strlen(ptr)), cp(alloc.allocate(sz)), cap(sz)
 {
 	uninitialized_copy(ptr, ptr + sz, cp);
 }
 
-//Copy (len) characters from const char*
+/* Copy (len) characters from const char* */
 String::String(const char* ptr, size_t len) : sz((len < strlen(ptr)) ? len : strlen(ptr)),
 	cp(alloc.allocate(sz)), cap(sz)
 {
 	uninitialized_copy(ptr, ptr + sz, cp);
 }
 
-//Copy character (len) times
+/* Copy character (len) times */
 String::String(size_t len, char ch) : sz(len), cp(alloc.allocate(sz)), cap(sz)
 {
 	for (size_t i = 0; i < len; i++)
 		alloc.construct(cp + i, ch);
 }
 
-//Copy text from initializer_list
+/* Copy text from initializer_list */
 String::String(initializer_list<char> ls) : sz(ls.size()), cp(alloc.allocate(sz)), cap(sz)
 {
 	auto beg = ls.begin();
@@ -72,13 +72,13 @@ String::String(initializer_list<char> ls) : sz(ls.size()), cp(alloc.allocate(sz)
 
 
 
-//Copy the other String
+/* Copy the other String */
 String::String(const String& str) : sz(str.sz), cp(alloc.allocate(sz)), cap(sz)
 {
 	uninitialized_copy(str.cp, str.cp + sz, cp);
 }
 
-//Copy (len) characters from String, starting from (pos) character
+/* Copy (len) characters from String, starting from (pos) character */
 String::String(const String& str, size_t pos, size_t len)
 {
 	if (str.sz > pos)
@@ -93,17 +93,17 @@ String::String(const String& str, size_t pos, size_t len)
 	cp = alloc.allocate(sz);
 	cap = sz;
 	for (size_t i = 0; i < sz; i++)
-		alloc.construct(cp + i, *(str.cp + pos + i)); //Copies (sz) characters, starting from pos
+		alloc.construct(cp + i, *(str.cp + pos + i)); // Copie (sz) characters, starting from pos
 }
 
-//Move the text from one String to the other
+/* Move the text from one String to the other */
 String::String(String&& str) noexcept : sz(str.sz), cp(str.cp), cap(str.cap)
 {
 	str.cp = nullptr;
 	str.sz = str.cap = 0;
 }
 
-//Assign one String, to the other
+/* Assign one String, to the other */
 String& String::operator=(const String& str)
 {
 	if (cap >= str.cap) {
@@ -122,7 +122,7 @@ String& String::operator=(const String& str)
 	return *this;
 }
 
-//Assign text from const char* to this String
+/* Assign text from const char* to this String */
 String& String::operator=(const char* ptr)
 {
 	if (cap >= strlen(ptr)) {
@@ -141,7 +141,7 @@ String& String::operator=(const char* ptr)
 	return *this;
 }
 
-//Assign char to this String
+/* Assign char to this String */
 String& String::operator=(char ch)
 {
 	if (cap >= 1) {
@@ -160,7 +160,7 @@ String& String::operator=(char ch)
 	return *this;
 }
 
-//Assign chars from initializer_list to this String
+/* Assign chars from initializer_list to this String */
 String& String::operator=(std::initializer_list<char> ls)
 {
 	if (cap >= ls.size()) {
@@ -179,7 +179,7 @@ String& String::operator=(std::initializer_list<char> ls)
 	return *this;
 }
 
-//Assign and move one String to the other
+/* Assign and move one String to the other */
 String& String::operator=(String&& str) noexcept
 {
 	if (this != &str) {
@@ -265,8 +265,8 @@ String::const_reverse_iterator String::crend() const noexcept
 	return const_reverse_iterator(cp - 1);
 }
 
-//Resize String to (n) size, if n > sz - creates null characters,
-//else if n < sz, destroys characters until n == sz
+/* Resize String to the given size, if it is smaller than the current size, remove some characters,
+if it is higher, add null characters */
 void String::resize(size_t n)
 {
 	if (n > sz) {
@@ -292,8 +292,7 @@ void String::resize(size_t n)
 	}
 }
 
-//The same as void String::resize(size_t n), but instead of creating null characters,
-//creates (n - sz) copies of ch
+/* Resize String to (n) size, if needed fill the rest of the String with given character */
 void String::resize(size_t n, char ch)
 {
 	if (n > sz) {
@@ -319,7 +318,7 @@ void String::resize(size_t n, char ch)
 	}
 }
 
-//Increases String's capacity to n, can't change the size and contents of the String
+/* Increase String's capacity to the given size, can't change the size and contents of the String */
 void String::reserve(size_t n)
 {
 	if (n > sz) {
@@ -336,7 +335,7 @@ void String::reserve(size_t n)
 	}
 }
 
-//Shrinks the capacity to the size of String
+/* Shrink the capacity to the size of String */
 void String::shrink_to_fit()
 {
 	if (cap != sz) {
@@ -350,7 +349,7 @@ void String::shrink_to_fit()
 	}
 }
 
-//Returns reference to the character at (pos) position
+/* Return reference to the character at the given position */
 char& String::operator[](size_t pos)
 {
 	if (pos >= sz)
@@ -358,7 +357,7 @@ char& String::operator[](size_t pos)
 	return *(cp + pos);
 }
 
-//Const version of char& String::operator[](size_t)
+/* Return reference to const character at the given position */
 const char& String::operator[](size_t pos) const
 {
 	if (pos >= sz)
@@ -366,7 +365,7 @@ const char& String::operator[](size_t pos) const
 	return *(cp + pos);
 }
 
-//The same as operator[]
+/* Return reference to the character at the given position */
 char& String::at(size_t pos)
 {
 	if (pos >= sz)
@@ -374,7 +373,7 @@ char& String::at(size_t pos)
 	return *(cp + pos);
 }
 
-//Const version of char& String::at(size_t)
+/* Return reference to the const character at the given position */
 const char& String::at(size_t pos) const
 {
 	if (pos >= sz)
@@ -382,7 +381,7 @@ const char& String::at(size_t pos) const
 	return *(cp + pos);
 }
 
-//Returns reference to the last character of String, if String is empty, throws exception
+/* Return reference to the last character of String, if String is empty, throw runtime_error */
 char& String::back()
 {
 	if (empty())
@@ -390,7 +389,7 @@ char& String::back()
 	return *(cp + sz - 1);   //last character is at the index sz - 1
 }
 
-//Const version of char& String::back()
+/* Return reference to the last, const character of String, if String is empty, throw runtime_error */
 const char& String::back() const
 {
 	if (empty())
@@ -398,7 +397,7 @@ const char& String::back() const
 	return *(cp + sz - 1);
 }
 
-//Returns reference to the first character of String, if String is empty, throws exception
+/* Return reference to the first character of String, if String is empty, throw runtime_error */
 char& String::front()
 {
 	if (empty())
@@ -406,7 +405,7 @@ char& String::front()
 	return *cp;
 }
 
-//Const version of char& String::front()
+/* Return reference to the first, const character of String, if String is empty, throw runtime_error */
 const char& String::front() const
 {
 	if (empty())
@@ -414,7 +413,7 @@ const char& String::front() const
 	return *cp;
 }
 
-//Appends copy of the second String to the first
+/* Append copy of the second String to the first */
 String& String::append(const String& str)
 {
 	size_t newSize = sz + str.sz;
@@ -436,8 +435,8 @@ String& String::append(const String& str)
 	return *this;
 }
 
-//Appends copy of (sublen) characters of the second String, starting at the postion (subpos),
-//if length isn't given, copies the entire String starting at position (subpos)
+/* Append copy of some characters of the second String, starting at the given postion,
+if length isn't given, copies the entire String starting at the given position */
 String& String::append(const String& str, size_t subpos, size_t sublen)
 {
 	if (subpos >= str.sz)
@@ -465,7 +464,7 @@ String& String::append(const String& str, size_t subpos, size_t sublen)
 	return *this;
 }
 
-//Appends const char* to String
+/* Append const char* to String */
 String& String::append(const char* ptr)
 {
 	size_t ptrSize = strlen(ptr), newSize = sz + ptrSize;
@@ -487,7 +486,7 @@ String& String::append(const char* ptr)
 	return *this;
 }
 
-//Appends (n) characters from const char* to String
+/* Append given number of characters from const char* to String */
 String& String::append(const char* ptr, size_t n)
 {
 	if (n > strlen(ptr))
@@ -511,7 +510,7 @@ String& String::append(const char* ptr, size_t n)
 	return *this;
 }
 
-//Apends (n) copies of the character (ch) to String
+/* Append given number of copies of the character to String */
 String& String::append(size_t n, char ch)
 {
 	size_t newSize = sz + n;
@@ -533,7 +532,7 @@ String& String::append(size_t n, char ch)
 	return *this;
 }
 
-//Appends copy of initializer_list to String
+/* Append copy of initializer_list to String */
 String& String::append(std::initializer_list<char> ls)
 {
 	size_t newSize = sz + ls.size();
@@ -557,32 +556,31 @@ String& String::append(std::initializer_list<char> ls)
 	return *this;
 }
 
-//Returns String& String::append(const String&)
+/* Append given String to this one */
 String& String::operator+=(const String& str)
 {
 	return append(str);
 }
 
-//Returns String& String::append(const char*)
+/* Append given const char* to this String */
 String& String::operator+=(const char* ptr)
 {
 	return append(ptr);
 }
 
-//Returns String& String::append(size_t, char)
+/* Append given character to this String */
 String& String::operator+=(char c)
 {
 	return append(1, c);
 }
 
-//Returns String& String::append(std::initializer_list<char>)
+/* Append given list of characters to this String */
 String& String::operator+=(std::initializer_list<char> ls)
 {
 	return append(ls);
 }
 
-//Pushes back character ch, if there is still unused capacity, it uses it,
-//otherwise allocates new memory
+/* Push back character, can reallocate memory if needed */
 void String::push_back(char ch)
 {
 	if (sz < cap) {
@@ -601,14 +599,14 @@ void String::push_back(char ch)
 	}
 }
 
-//Returns String& String::operator=(const String&)
+/* Assign given string to this one */
 String& String::assign(const String& str)
 {
 	return *this = str;
 }
 
-//Assigns (sublen) characters of the String (str) starting at the position (subpos)
-//to this String
+/* Assign given number of characters from the given String starting at certain position
+to this String */
 String& String::assign(const String& str, size_t subpos, size_t sublen)
 {
 	if (subpos >= str.sz)
@@ -633,13 +631,13 @@ String& String::assign(const String& str, size_t subpos, size_t sublen)
 	return *this;
 }
 
-//Returns String& String::operator=(const char*)
+/* Assign const char* to this String */
 String& String::assign(const char* ptr)
 {
 	return *this = ptr;
 }
 
-//Assigns first (n) characters of const char* to this String
+/* Assign first given number of characters from const char* to this String */
 String& String::assign(const char* ptr, size_t n)
 {
 	if (n > strlen(ptr))
@@ -662,7 +660,7 @@ String& String::assign(const char* ptr, size_t n)
 	return *this;
 }
 
-//Assigns (n) copies of character (ch) to this String
+/* Assign given number of certain character to this String */
 String& String::assign(size_t n, char ch)
 {
 	if (cap >= n) {
@@ -682,7 +680,7 @@ String& String::assign(size_t n, char ch)
 	return *this;
 }
 
-//Assigns copy of the initializer_list<char> to this String
+/* Assign list of characters to this String */
 String& String::assign(std::initializer_list<char> ls)
 {
 	size_t lstSize = ls.size();
@@ -704,13 +702,13 @@ String& String::assign(std::initializer_list<char> ls)
 	return *this;
 }
 
-//Assigns rvalue to this String
+/* Assign rvalue String to this one */
 String& String::assign(String&& str) noexcept
 {
 	return operator=(std::move(str));
 }
 
-//Inserts second String into the first, at the given postition (pos)
+/* Insert second String into the first, at the given postition */
 String& String::insert(size_t pos, const String& str)
 {
 	if (pos >= sz)
@@ -740,8 +738,8 @@ String& String::insert(size_t pos, const String& str)
 	return *this;
 }
 
-//Inserts (sublen) characters of the String (str) to the position (pos), 
-//starting copying at the posiition (subpos)
+/* Insert given amount of character from the String, to the given position, 
+start copying at the certain posiition */
 String& String::insert(size_t pos, const String& str, size_t subpos, size_t sublen)
 {
 	if (subpos >= str.sz)
@@ -773,7 +771,7 @@ String& String::insert(size_t pos, const String& str, size_t subpos, size_t subl
 	return *this;
 }
 
-//Inserts const char* to this String, at the given position (pos)
+/* Insert const char* to this String, at the given position */
 String& String::insert(size_t pos, const char* ptr)
 {
 	if (pos >= sz)
@@ -804,8 +802,8 @@ String& String::insert(size_t pos, const char* ptr)
 	return *this;
 }
 
-//Inserts copy of the first (n) characters of const char* to the given position (pos) 
-//of this String
+/* Insert copy of the first given number of characters from const char* to the given position 
+of this String */
 String& String::insert(size_t pos, const char* ptr, size_t n)
 {
 	if (pos >= sz)
@@ -837,7 +835,7 @@ String& String::insert(size_t pos, const char* ptr, size_t n)
 	return *this;
 }
 
-//Inserts (n) copies of character (ch) to the String at the given position (pos)
+/* Inserts given number of certain character to the String at the given position */
 String& String::insert(size_t pos, size_t n, char ch)
 {
 	if (pos >= sz)
@@ -867,7 +865,7 @@ String& String::insert(size_t pos, size_t n, char ch)
 	return *this;
 }
 
-/* Inserts (n) copies of the given character in place where iterator points */
+/* Insert given amount of certain character in place where the iterator points */
 String::iterator String::insert(const_iterator p, size_t n, char ch)
 {
 	bool match = false;
@@ -910,13 +908,13 @@ String::iterator String::insert(const_iterator p, size_t n, char ch)
 	return (begin() + index + n);
 }
 
-/* Inserts the given character in the place where iterator points to */
+/* Insert given character in the place where iterator points to */
 String::iterator String::insert(const_iterator p, char ch)
 {
 	return insert(p, 1, ch);
 }
 
-/* Inserts the given initializer list in the place where iterator points to */
+/* Insert the given list of characters in the place where iterator points to */
 String& String::insert(const_iterator p, std::initializer_list<char> lst)
 {
 	bool match = false;
@@ -960,7 +958,7 @@ String& String::insert(const_iterator p, std::initializer_list<char> lst)
 	return *this;
 }
 
-//Erases (len) characters from this String, starting from the given position (pos)
+/* Erase certain amount of characters from this String, starting from the given position */
 String& String::erase(size_t pos, size_t len)
 {
 	if (pos >= sz)
@@ -982,7 +980,7 @@ String& String::erase(size_t pos, size_t len)
 	return *this;
 }
 
-/* Erases the character in this String pointed by the given iterator */
+/* Erase the character in this String pointed by the given iterator */
 String::iterator String::erase(const_iterator p)
 {
 	bool match = false;
@@ -1010,7 +1008,7 @@ String::iterator String::erase(const_iterator p)
 }
 
 
-/* Erases the characters in this String pointed by the given iterators range */
+/* Erase the characters in this String pointed by the given iterators range */
 String::iterator String::erase(const_iterator first, const_iterator last)
 {
 	bool match1 = false;
@@ -1047,7 +1045,7 @@ String::iterator String::erase(const_iterator first, const_iterator last)
 	return iterator(cp + index_first);
 }
 
-//Swaps the contents of the String, updates the size and capacity
+/* Swap the contents of the String, update the size and capacity */
 void String::swap(String& str)
 {
 	std::swap(cp, str.cp);
@@ -1055,7 +1053,7 @@ void String::swap(String& str)
 	std::swap(cap, str.cap);
 }
 
-//Replaces (len) characters of the String, starting at (pos) with the second String
+/* Replace certain amount of characters of the String, starting at the given position in the second String */
 String& String::replace(size_t pos, size_t len, const String& str)
 {
 	if (pos >= sz)
@@ -1080,7 +1078,7 @@ String& String::replace(size_t pos, size_t len, const String& str)
 	return *this;
 }
 
-/* Replaces the given range with the copy of the given String */
+/* Replace the given range with the copy of the given String */
 String& String::replace(const_iterator first, const_iterator last, const String& str)
 {
 	bool match1 = false;
