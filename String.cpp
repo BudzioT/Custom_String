@@ -17,7 +17,7 @@ using std::initializer_list;
 
 allocator<char> String::alloc;
 
-//Allocates new memory, and moves the text to the new place
+//Allocate new memory, and move the text to the new place
 void String::reallocate()
 {
 	size_t s = sz ? sz * 2 : 1;
@@ -30,7 +30,7 @@ void String::reallocate()
 	cap = s;
 }
 
-//Destructs elements, frees memory
+//Destruct elements, free memory
 void String::free()
 {
 	if (cp) {
@@ -42,27 +42,27 @@ void String::free()
 	sz = cap = 0;
 }
 
-//Copies text from const char*
+//Copy text from const char*
 String::String(const char* ptr) : sz(strlen(ptr)), cp(alloc.allocate(sz)), cap(sz)
 {
 	uninitialized_copy(ptr, ptr + sz, cp);
 }
 
-//Copies (len) characters from const char*
+//Copy (len) characters from const char*
 String::String(const char* ptr, size_t len) : sz((len < strlen(ptr)) ? len : strlen(ptr)),
 	cp(alloc.allocate(sz)), cap(sz)
 {
 	uninitialized_copy(ptr, ptr + sz, cp);
 }
 
-//Copies character (len) times
+//Copy character (len) times
 String::String(size_t len, char ch) : sz(len), cp(alloc.allocate(sz)), cap(sz)
 {
 	for (size_t i = 0; i < len; i++)
 		alloc.construct(cp + i, ch);
 }
 
-//Copies text from initializer_list
+//Copy text from initializer_list
 String::String(initializer_list<char> ls) : sz(ls.size()), cp(alloc.allocate(sz)), cap(sz)
 {
 	auto beg = ls.begin();
@@ -72,13 +72,13 @@ String::String(initializer_list<char> ls) : sz(ls.size()), cp(alloc.allocate(sz)
 
 
 
-//Copies other String
+//Copy the other String
 String::String(const String& str) : sz(str.sz), cp(alloc.allocate(sz)), cap(sz)
 {
 	uninitialized_copy(str.cp, str.cp + sz, cp);
 }
 
-//Copies (len) characters from String, starting from (pos) character
+//Copy (len) characters from String, starting from (pos) character
 String::String(const String& str, size_t pos, size_t len)
 {
 	if (str.sz > pos)
@@ -96,14 +96,14 @@ String::String(const String& str, size_t pos, size_t len)
 		alloc.construct(cp + i, *(str.cp + pos + i)); //Copies (sz) characters, starting from pos
 }
 
-//Moves the text from one String to the other
+//Move the text from one String to the other
 String::String(String&& str) noexcept : sz(str.sz), cp(str.cp), cap(str.cap)
 {
 	str.cp = nullptr;
 	str.sz = str.cap = 0;
 }
 
-//Assigns one String, to the other
+//Assign one String, to the other
 String& String::operator=(const String& str)
 {
 	if (cap >= str.cap) {
@@ -122,7 +122,7 @@ String& String::operator=(const String& str)
 	return *this;
 }
 
-//Assings text from const char* to this String
+//Assign text from const char* to this String
 String& String::operator=(const char* ptr)
 {
 	if (cap >= strlen(ptr)) {
@@ -141,7 +141,7 @@ String& String::operator=(const char* ptr)
 	return *this;
 }
 
-//Assigns char to this String
+//Assign char to this String
 String& String::operator=(char ch)
 {
 	if (cap >= 1) {
@@ -160,7 +160,7 @@ String& String::operator=(char ch)
 	return *this;
 }
 
-//Assigns chars from initializer_list to this String
+//Assign chars from initializer_list to this String
 String& String::operator=(std::initializer_list<char> ls)
 {
 	if (cap >= ls.size()) {
@@ -179,7 +179,7 @@ String& String::operator=(std::initializer_list<char> ls)
 	return *this;
 }
 
-//Assigns and moves one String to the other
+//Assign and move one String to the other
 String& String::operator=(String&& str) noexcept
 {
 	if (this != &str) {
@@ -193,79 +193,79 @@ String& String::operator=(String&& str) noexcept
 	return *this;
 }
 
-/* Returns an iterator to the beginning of this String */
+/* Return an iterator to the beginning of this String */
 String::iterator String::begin() noexcept
 {
 	return iterator(cp);
 }
 
-/* Returns a const iterator to the beginning of this String */
+/* Return a const iterator to the beginning of this String */
 String::const_iterator String::begin() const noexcept
 {
 	return const_iterator(cp);
 }
 
-/* Returns an iterator to the end of this String */
+/* Return an iterator to the end of this String */
 String::iterator String::end() noexcept
 {
 	return iterator(cp + sz);
 }
 
-/* Returns a const iterator to the end of this String */
+/* Return a const iterator to the end of this String */
 String::const_iterator String::end() const noexcept
 {
 	return const_iterator(cp + sz);
 }
 
-/* Returns a reverse iterator to the reverse beginning of this String */
+/* Return a reverse iterator to the reverse beginning of this String */
 String::reverse_iterator String::rbegin() noexcept
 {
 	return reverse_iterator(cp + (sz - 1));
 }
 
-/* Returns a const reverse iterator to the reverse beginning of this String */
+/* Return a const reverse iterator to the reverse beginning of this String */
 String::const_reverse_iterator String::rbegin() const noexcept
 {
 	return const_reverse_iterator(cp + (sz - 1));
 }
 
-/* Returns a reverse iterator to the reverse end of this String */
+/* Return a reverse iterator to the reverse end of this String */
 String::reverse_iterator String::rend() noexcept
 {
 	return reverse_iterator(cp - 1);
 }
 
-/* Returns a const reverse iterator to the reverse end of this String */
+/* Return a const reverse iterator to the reverse end of this String */
 String::const_reverse_iterator String::rend() const noexcept
 {
 	return const_reverse_iterator(cp - 1);
 }
 
-/* Returns a const iterator to the beginning of this String */
+/* Return a const iterator to the beginning of this String */
 String::const_iterator String::cbegin() const noexcept
 {
 	return const_iterator(cp);
 }
 
-/* Returns a const iterator to the end of this String */
+/* Return a const iterator to the end of this String */
 String::const_iterator String::cend() const noexcept
 {
 	return const_iterator(cp + sz);
 }
 
-/* Returns a const reverse iterator to the reverse beginning of this String  */
+/* Return a const reverse iterator to the reverse beginning of this String  */
 String::const_reverse_iterator String::crbegin() const noexcept
 {
 	return const_reverse_iterator(cp + sz);
 }
 
-/* Returns a const reverse iterator to the reverse end of this String  */
+/* Return a const reverse iterator to the reverse end of this String  */
 String::const_reverse_iterator String::crend() const noexcept
 {
 	return const_reverse_iterator(cp - 1);
 }
 
-//Resizes String to (n) size, if n > sz - creates null characters,
+//Resize String to (n) size, if n > sz - creates null characters,
 //else if n < sz, destroys characters until n == sz
 void String::resize(size_t n)
 {
