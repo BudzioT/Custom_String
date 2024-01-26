@@ -1120,8 +1120,8 @@ String& String::replace(const_iterator first, const_iterator last, const String&
 	return *this;
 }
 
-//Replaces (len) character of this String, starting at (pos), with (sublen) characters
-//of the Second string, starting at the position (subpos)
+/* Replace given amount of characters of this String, starting at the given, with certain number of characters
+from the Second string, starting at the given position */
 String& String::replace(size_t pos, size_t len, const String& str, size_t subpos, size_t sublen)
 {
 	if (pos >= sz || subpos >= str.sz)
@@ -1148,7 +1148,7 @@ String& String::replace(size_t pos, size_t len, const String& str, size_t subpos
 	return *this;
 }
 
-//Replaces (len) characters of this String, starting at (pos), with const char*
+/* Replace given number of characters of this String, starting at certain position, with const char* */
 String& String::replace(size_t pos, size_t len, const char* cptr)
 {
 	if (pos >= sz)
@@ -1174,7 +1174,7 @@ String& String::replace(size_t pos, size_t len, const char* cptr)
 	return *this;
 }
 
-/* Replaces the given range with the copy of the const char* */
+/* Replace the given range with copy of the const char* */
 String& String::replace(const_iterator first, const_iterator last, const char* cptr)
 {
 	bool match1 = false;
@@ -1217,8 +1217,8 @@ String& String::replace(const_iterator first, const_iterator last, const char* c
 	return *this;
 }
 
-//Replaces (len) characters of this String, starting at (pos), with (n) characters
-//of const char*
+/* Replace given amount of characters of this String, starting at certain position, with given amount of characters
+from const char* */
 String& String::replace(size_t pos, size_t len, const char* cptr, size_t n)
 {
 	size_t ptrSize = strlen(cptr);
@@ -1246,7 +1246,7 @@ String& String::replace(size_t pos, size_t len, const char* cptr, size_t n)
 	return *this;
 }
 
-/* Replaces the given range with the copy of the (n) chatacters of const char* */
+/* Replace the given range with the copy of certain amount of characters from const char* */
 String& String::replace(const_iterator first, const_iterator last, const char* cptr, size_t n)
 {
 	bool match1 = false;
@@ -1292,7 +1292,7 @@ String& String::replace(const_iterator first, const_iterator last, const char* c
 	return *this;
 }
 
-//Replaces (len) characters of this String, starting at (pos), with (n) characters (ch)
+/* Replace given amount of characters of this String, starting at certain position, with given character */
 String& String::replace(size_t pos, size_t len, size_t n, char ch)
 {
 	if (pos >= sz)
@@ -1317,7 +1317,7 @@ String& String::replace(size_t pos, size_t len, size_t n, char ch)
 	return *this;
 }
 
-/* Replaces the given range with (n) copies of the given character */
+/* Replace the given range with certain number of the given character */
 String& String::replace(const_iterator first, const_iterator last, size_t n, char ch)
 {
 	bool match1 = false;
@@ -1359,7 +1359,7 @@ String& String::replace(const_iterator first, const_iterator last, size_t n, cha
 	return *this;
 }
 
-/* Replaces the given range with the copy of the initializer list */
+/* Replace the given range with the copy of the list of characters */
 String& String::replace(const_iterator first, const_iterator last, std::initializer_list<char> lst)
 {
 	bool match1 = false;
@@ -1403,13 +1403,14 @@ String& String::replace(const_iterator first, const_iterator last, std::initiali
 	return *this;
 }
 
-//Erases the last character of this String
+/* Erase the last character of this String */
 void String::pop_back()
 {
-	alloc.destroy(cp + --sz);
+	if (sz != 0)
+		alloc.destroy(cp + --sz);
 }
 
-/* Returns const char*, that points to the same place as String, adds null to the end */
+/* Return const char*, that points to the same place as this String, adds null to the end */
 const char* String::c_str()
 {
 	if (cap == sz) {
@@ -1428,19 +1429,19 @@ const char* String::c_str()
 	return cp;
 }
 
-/* Returns const char*, that points to the same place as String, adds null to the end */
+/* Return const char*, that points to the same place as this String, adds null to the end */
 const char* String::data()
 {
 	return this->c_str();
 }
 
-/* Returns the copy of the allocator, that this String uses */
+/* Return the copy of the allocator, that this String uses */
 String::allocator_type String::get_allocator() const noexcept
 {
 	return alloc;
 }
 
-/* Copies (len) characters of the String, starting at the position (pos), to the char* */
+/* Copy given amount of characters of the String, starting at certain position, to the char* */
 size_t String::copy(char* cptr, size_t len, size_t pos) const
 {
 	if (pos >= sz)
@@ -1452,7 +1453,7 @@ size_t String::copy(char* cptr, size_t len, size_t pos) const
 	return len;
 }
 
-/* Finds given String, in this String, starting at the given position */
+/* Find given text in this String, starting at the given position */
 size_t String::find(const String& str, size_t pos) const noexcept
 {
 	if (!str.cp)
@@ -1476,7 +1477,7 @@ size_t String::find(const String& str, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds given text, in this String, starting at the given position */
+/* Find given text, in this String, starting at the given position */
 size_t String::find(const char* cptr, size_t pos) const
 {
 	if (!cptr)
@@ -1501,7 +1502,7 @@ size_t String::find(const char* cptr, size_t pos) const
 	return npos;
 }
 
-/* Finds (n) characters of the given text, in this String, starting at the given position */
+/* Find certain amount of characters of the given text, in this String, starting at the given position */
 size_t String::find(const char* cptr, size_t pos, size_t n) const
 {
 	if (!cptr)
@@ -1527,7 +1528,7 @@ size_t String::find(const char* cptr, size_t pos, size_t n) const
 	return npos;
 }
 
-/* Finds given character, in this String, starting at the position pos */
+/* Find given character, in this String, starting at the given position */
 size_t String::find(char c, size_t pos) const noexcept
 {
 	for (size_t i = pos; i < sz; i++) {
@@ -1537,7 +1538,7 @@ size_t String::find(char c, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the last copy of the given String, in this String, starting at the given position (pos) */
+/* Find the last copy of the given String, in this String, starting at the given position */
 size_t String::rfind(const String& str, size_t pos) const noexcept
 {
 	if (!str.cp)
@@ -1558,7 +1559,7 @@ size_t String::rfind(const String& str, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the last copy of the given text, in this String, starting at the given position (pos) */
+/* Find the last copy of the given text, in this String, starting at the given position */
 size_t String::rfind(const char* cptr, size_t pos) const
 {
 	if (!cptr)
@@ -1580,7 +1581,7 @@ size_t String::rfind(const char* cptr, size_t pos) const
 	return npos;
 }
 
-/* Finds the last copy of the (n) characters of the given text, in this String, starting at the given position (pos) */
+/* Find the last copy of certain amount of characters from the given text, in this String, starting at the given position */
 size_t String::rfind(const char* cptr, size_t pos, size_t n) const
 {
 	if (!cptr)
@@ -1603,7 +1604,7 @@ size_t String::rfind(const char* cptr, size_t pos, size_t n) const
 	return npos;
 }
 
-/* Finds the copy of the character, in this String, starting at the given position (pos) */
+/* Find the copy of the character, in this String, starting at the given position */
 size_t String::rfind(char c, size_t pos) const noexcept
 {
 	for (long long int i = (long long int) sz - 1; i >= pos; i++) {
@@ -1613,8 +1614,8 @@ size_t String::rfind(char c, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the first character that matches one of the characters in the String, 
-starting at the given position (pos), returns its index */
+/* Find the first character that matches one of the characters in the String, 
+starting at the given position, return its index */
 size_t String::find_first_of(const String& str, size_t pos) const noexcept
 {
 	for (size_t i = pos; i < sz; i++) {
@@ -1626,8 +1627,8 @@ size_t String::find_first_of(const String& str, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the first character that matches one of the characters of the text, 
-starting at the given position (pos), returns its index */
+/* Find the first character that matches one of the characters of the text, 
+starting at the given position, return its index */
 size_t String::find_first_of(const char* cptr, size_t pos) const
 {
 	size_t ptrSize = strlen(cptr);
@@ -1640,8 +1641,8 @@ size_t String::find_first_of(const char* cptr, size_t pos) const
 	return npos;
 }
 
-/* Finds the first character that matches one of the (n) characters of the text,
-starting at the given position (pos), returns its index */
+/* Find the first character that matches one of the given amount of characters from the text,
+starting at the given position, returns its index */
 size_t String::find_first_of(const char* cptr, size_t pos, size_t n) const
 {
 	if (n > strlen(cptr))
@@ -1655,8 +1656,8 @@ size_t String::find_first_of(const char* cptr, size_t pos, size_t n) const
 	return npos;
 }
 
-/* Finds the first character that matches the given character
-starting at the given position (pos), returns its index */
+/* Find the first character that matches the given character
+starting at the given position, return its index */
 size_t String::find_first_of(char ch, size_t pos) const noexcept
 {
 	for (size_t i = pos; i < sz; i++) {
@@ -1666,8 +1667,8 @@ size_t String::find_first_of(char ch, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the last character that matches one of the characters in the String, 
-starting at the given position (pos), returns its index */
+/* Find the last character that matches one of the characters in the String, 
+starting at the given position, return its index */
 size_t String::find_last_of(const String& str, size_t pos) const noexcept
 {
 	for (long long int i = (long long int) sz - 1; i >= pos; i--) {
@@ -1679,8 +1680,8 @@ size_t String::find_last_of(const String& str, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the last character that matches one of the characters of the text,
-starting at the given position (pos), returns its index */
+/* Find the last character that matches one of the characters of the text,
+starting at the given position, return its index */
 size_t String::find_last_of(const char* cptr, size_t pos) const
 {
 	size_t ptrSize = strlen(cptr);
@@ -1693,8 +1694,8 @@ size_t String::find_last_of(const char* cptr, size_t pos) const
 	return npos;
 }
 
-/* Finds the last character that matches one of the (n) characters of the text,
-starting at the given position (pos), returns its index */
+/* Find the last character that matches one of the given amount of characters from the text,
+starting at the given position, return its index */
 size_t String::find_last_of(const char* cptr, size_t pos, size_t n) const
 {
 	if (n > strlen(cptr))
@@ -1708,8 +1709,8 @@ size_t String::find_last_of(const char* cptr, size_t pos, size_t n) const
 	return npos;
 }
 
-/* Finds the last character that matches the given character
-starting at the given position (pos), returns its index */
+/* Find the last character that matches the given character
+starting at the given position, return its index */
 size_t String::find_last_of(char ch, size_t pos) const noexcept
 {
 	for (long long int i = (long long int) sz - 1; i >= pos; i--) {
@@ -1719,7 +1720,7 @@ size_t String::find_last_of(char ch, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the first character that isn't in the given String, starting at the given position (pos), returns its index */
+/* Find the first character that isn't in the given String, starting at the given position, return its index */
 size_t String::find_first_not_of(const String& str, size_t pos) const noexcept
 {
 	size_t counter;
@@ -1734,7 +1735,7 @@ size_t String::find_first_not_of(const String& str, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the first character that isn't in the given text, starting at the given position (pos), returns its index */
+/* Find the first character that isn't in the given text, starting at the given position, return its index */
 size_t String::find_first_not_of(const char* cptr, size_t pos) const
 {
 	size_t ptrSize = strlen(cptr);
@@ -1750,8 +1751,8 @@ size_t String::find_first_not_of(const char* cptr, size_t pos) const
 	return npos;
 }
 
-/* Finds the first character that isn't in the (n) characters of the given text,
-starting at the given position (pos), returns it index */
+/* Find the first character that isn't in the given amount of characters from the given text,
+starting at the given position, returns it index */
 size_t String::find_first_not_of(const char* cptr, size_t pos, size_t n) const
 {
 	if (n > strlen(cptr))
@@ -1768,7 +1769,7 @@ size_t String::find_first_not_of(const char* cptr, size_t pos, size_t n) const
 	return npos;
 }
 
-/* Finds the first character that isn't the given character, returns it index */
+/* Find the first character that isn't the given character, return its index */
 size_t String::find_first_not_of(char ch, size_t pos) const noexcept
 {
 	for (size_t i = pos; i < sz; i++) {
@@ -1778,7 +1779,7 @@ size_t String::find_first_not_of(char ch, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the last character that isn't in the given String, starting at the given position (pos), returns its index */
+/* Find the last character that isn't in the given String, starting at the given position, return its index */
 size_t String::find_last_not_of(const String& str, size_t pos) const noexcept
 {
 	size_t counter;
@@ -1793,7 +1794,7 @@ size_t String::find_last_not_of(const String& str, size_t pos) const noexcept
 	return npos;
 }
 
-/* Finds the last character that isn't in the given text, starting at the given position (pos), returns its index */
+/* Find the last character that isn't in the given text, starting at the given position, return its index */
 size_t String::find_last_not_of(const char* cptr, size_t pos) const
 {
 	size_t ptrSize = strlen(cptr);
@@ -1809,8 +1810,8 @@ size_t String::find_last_not_of(const char* cptr, size_t pos) const
 	return npos;
 }
 
-/* Finds the last character that isn't in the (n) characters of the given text,
-starting at the given position (pos), returns it index */
+/* Find the last character that isn't in the given amount of characters from the given text,
+starting at the given position, return its index */
 size_t String::find_last_not_of(const char* cptr, size_t pos, size_t n) const
 {
 	if (n > strlen(cptr))
@@ -1827,7 +1828,7 @@ size_t String::find_last_not_of(const char* cptr, size_t pos, size_t n) const
 	return npos;
 }
 
-/* Finds the last character that isn't the given character, returns it index */
+/* Find the last character that isn't the same as the given character, return its index */
 size_t String::find_last_not_of(char ch, size_t pos) const noexcept
 {
 	for (long long int i = (long long int) sz - 1; i >= pos; i--) {
@@ -1837,7 +1838,7 @@ size_t String::find_last_not_of(char ch, size_t pos) const noexcept
 	return npos;
 }
 
-/* Returns a copy of the (len) characters of this String, starting at the position (pos)*/
+/* Return a copy of the given amount of characters of this String, starting at the given position */
 String String::substr(size_t pos, size_t len) const
 {
 	if (pos == sz)
