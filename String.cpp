@@ -1854,11 +1854,11 @@ String String::substr(size_t pos, size_t len) const
 	return result;
 }
 
-//Compares one String to the other, 
-// returns:
-//	1 if this String is greater than str
-//	-1 if this String is lower than str
-//	0 if two Strings are equal
+/* Compare one String to the other, 
+ return:
+	1 if this String is greater than the given one
+	-1 if this String is lower than the given one
+	0 if two Strings are equal */
 int String::compare(const String& str) const noexcept
 {
 	for (size_t i = 0; i < sz && i < str.sz; i++) {
@@ -1875,12 +1875,12 @@ int String::compare(const String& str) const noexcept
 	return 0;
 }
 
-//Compares one (len) characters of this String 
-// starting at the position (pos) to the other, 
-// returns:
-//	1 if this String is greater than str
-//	-1 if this String is lower than str
-//	0 if two Strings are equal
+/* Compares one given amount of characters of this String 
+ starting at the specified position, to the other one, 
+ return:
+	1 if this String is greater than the second one
+	-1 if this String is lower than the second one
+	0 if two Strings are equal */
 int String::compare(size_t pos, size_t len, const String & str) const
 {
 	if (pos >= sz)
@@ -1902,13 +1902,13 @@ int String::compare(size_t pos, size_t len, const String & str) const
 	return 0;
 }
 
-//Compares one (len) characters of this String 
-// starting at the position (pos) to the (sublen) characters of the other String, 
-// starting at the position (subpos), if sublen isn't given, it is equal to String length - position (npos), 
-// returns:
-//	1 if this String is greater than str
-//	-1 if this String is lower than str
-//	0 if two Strings are equal
+/* Compares one given amount of characters of this String 
+ starting at the specified position to the given amount characters of the other String, 
+ starting at the specified position, if second length isn't given, it is as long as the string, 
+ return:
+	1 if this String is greater than the second one
+	-1 if this String is lower than the second one
+	0 if two Strings are equal */
 int String::compare(size_t pos, size_t len, const String& str, size_t subpos, size_t sublen) const
 {
 	if (pos >= sz || subpos >= str.sz)
@@ -1932,11 +1932,11 @@ int String::compare(size_t pos, size_t len, const String& str, size_t subpos, si
 	return 0;
 }
 
-//Compares this String to the const char*, 
-// returns:
-//	1 if this String is greater than const char*
-//	-1 if this String is lower than const char*
-//	0 if this and const char* are equal
+/* Compare this String to the const char*, 
+ return:
+	1 if this String is greater than const char*
+	-1 if this String is lower than const char*
+	0 if this String and const char* are equal */
 int String::compare(const char* cptr) const
 {
 	size_t sizeCptr = strlen(cptr);
@@ -1954,12 +1954,12 @@ int String::compare(const char* cptr) const
 	return 0;
 }
 
-//Compares this (len) characters of the String, 
-//starting at the position (pos), to the const char*, 
-// returns:
-//	1 if this String is greater than const char*
-//	-1 if this String is lower than const char*
-//	0 if this and const char* are equal
+/* Compare this given amount of characters of the String, 
+ starting at the position specified position, to the const char*, 
+ return:
+	1 if this String is greater than const char*
+	-1 if this String is lower than const char*
+	0 if this String and const char* are equal */
 int String::compare(size_t pos, size_t len, const char* cptr) const
 {
 	if (pos >= sz)
@@ -1982,12 +1982,12 @@ int String::compare(size_t pos, size_t len, const char* cptr) const
 	return 0;
 }
 
-//Compares this (len) characters of the String, 
-//starting at the position (pos), to the (n) characters of const char*, 
-// returns:
-//	1 if this String is greater than const char*
-//	-1 if this String is lower than const char*
-//	0 if this and const char* are equal
+/* Compares this given amount of characters of the String, 
+ starting at the specified position, to the given amount of characters of const char*, 
+ return:
+	1 if this String is greater than const char*
+	-1 if this String is lower than const char*
+	0 if this String and const char* are equal */
 int String::compare(size_t pos, size_t len, const char* cptr, size_t n) const
 {
 	if (pos >= sz)
@@ -2012,7 +2012,7 @@ int String::compare(size_t pos, size_t len, const char* cptr, size_t n) const
 	return 0;
 }
 
-//Returns local String copy by appending one String to the other
+/* Return String local copy by appending one String to the other */
 String operator+(const String& lhs, const String& rhs)
 {
 	String result;
