@@ -2026,7 +2026,7 @@ String operator+(const String& lhs, const String& rhs)
 	return result;
 }
 
-//Returns copy of the local String built by appending one String, to other rvalue String
+/* Return local copy of the String built by appending one String to other the rvalue String */
 String operator+(const String& lhs, String&& rhs)
 {
 	String result;
@@ -2040,8 +2040,7 @@ String operator+(const String& lhs, String&& rhs)
 	return result;
 }
 
-//Same as String operator+(const String&, String&&), but it has 
-//diffrent order of the parameters
+/* Return a local copy of the rvalue String appended with lvalue String */
 String operator+(String&& lhs, const String& rhs)
 {
 	String result;
@@ -2055,7 +2054,7 @@ String operator+(String&& lhs, const String& rhs)
 	return result;
 }
 
-//Same as String operator+(const String&, String&&), but uses rvalues
+/* Return local copy of the rvalue String appended with another rvalue String */
 String operator+(String&& lhs, String&& rhs)
 {
 	String result;
@@ -2069,7 +2068,7 @@ String operator+(String&& lhs, String&& rhs)
 	return result;
 }
 
-//Returns copy of the String constructed by appending String and const char*
+/* Return copy of the String constructed by appending String and const char* */
 String operator+(const String& lhs, const char* rhs)
 {
 	String result;
@@ -2084,7 +2083,7 @@ String operator+(const String& lhs, const char* rhs)
 	return result;
 }
 
-//Same as String operator+(const String&, const char*), but it uses rvalue
+/* Return copy of the rvalue String appended with const char* */
 String operator+(String&& lhs, const char* rhs)
 {
 	String result;
@@ -2099,8 +2098,7 @@ String operator+(String&& lhs, const char* rhs)
 	return result;
 }
 
-//Same as String operator+(const String&, const char*), but it has 
-//diffrent order of the parameter list
+/* Return copy of the String created by appending const char* to String */
 String operator+(const char* lhs, const String& rhs)
 {
 	String result;
@@ -2115,7 +2113,7 @@ String operator+(const char* lhs, const String& rhs)
 	return result;
 }
 
-//Same as String operator+(const char*, const String&), but uses rvalue
+/* Return copy of the String created by appending const char* to rvalue String */
 String operator+(const char* lhs, String&& rhs)
 {
 	String result;
@@ -2130,7 +2128,7 @@ String operator+(const char* lhs, String&& rhs)
 	return result;
 }
 
-//Returns copy of the String, that is created by appending String and char
+/* Return copy of the String, that is created by appending String and char */
 String operator+(const String& lhs, char rhs)
 {
 	String result;
@@ -2142,7 +2140,7 @@ String operator+(const String& lhs, char rhs)
 	return result;
 }
 
-//Same as String operator+(const String&, char), but uses rvalue
+/* Return copy of the String, created by appending rvalue String with a char */
 String operator+(String&& lhs, char rhs)
 {
 	String result;
@@ -2154,8 +2152,7 @@ String operator+(String&& lhs, char rhs)
 	return result;
 }
 
-//Same as String operator+(const String&, char), but it has
-//diffrent parameters order
+/* Return copy of the String, created by appending char with a String */
 String operator+(char lhs, const String& rhs) 
 {
 	String result;
@@ -2168,7 +2165,7 @@ String operator+(char lhs, const String& rhs)
 	return result;
 }
 
-//Same as String operator+(char, const String&), but uses rvalue
+/* Return copy of the String, created by appending char with a rvalue String */
 String operator+(char lhs, String&& rhs)
 {
 	String result;
@@ -2181,121 +2178,121 @@ String operator+(char lhs, String&& rhs)
 	return result;
 }
 
-//Checks if one String is equal to the other
+/* Check if one String is the same as the other one */
 bool operator==(const String& lhs, const String& rhs) noexcept
 {
 	return (lhs.compare(rhs) == 0);
 }
 
-//Checks if const char* is equal to the String
+/* Check if const char* is the same as the String */
 bool operator==(const char* lhs, const String& rhs)
 {
 	return (rhs.compare(lhs) == 0);
 }
 
-//Checks if String is equal to the const char*
+/* Check if String is the same as the const char* */
 bool operator==(const String& lhs, const char* rhs)
 {
 	return (lhs.compare(rhs) == 0);
 }
 
-//Checks if one String isn't equal to the other
+/* Check if one String isn't the same as the other one */
 bool operator!=(const String& lhs, const String& rhs) noexcept
 {
 	return !(lhs == rhs);
 }
 
-//Checks if const char* isn't equal to the String
+/* Check if const char* isn't the same as the String */
 bool operator!=(const char* lhs, const String& rhs)
 {
 	return !(lhs == rhs);
 }
 
-//Checks if String isn't equal to the const char*
+/* Check if the String isn't the same as the const char* */
 bool operator!=(const String& lhs, const char* rhs)
 {
 	return !(lhs == rhs);
 }
 
-//Checks if the first String is lesser than the other one
+/* Check if the first String is lesser than the other one */
 bool operator<(const String& lhs, const String& rhs) noexcept
 {
 	return (lhs.compare(rhs) < 0);
 }
 
-//Checks if the const char* is lesser than the String
+/* Check if the const char* is lesser than the String */
 bool operator<(const char* lhs, const String& rhs)
 {
 	return (rhs.compare(lhs) > 0);
 }
 
-//Checks if the String is lesser than the const char*
+/* Check if the String is lesser than the const char* */
 bool operator<(const String& lhs, const char* rhs)
 {
 	return (lhs.compare(rhs) < 0);
 }
 
-//Checks if the first String is lesser than or equal to the second String
+/* Check if the first String is lesser than or equal to the second String */
 bool operator<=(const String& lhs, const String& rhs) noexcept
 {
 	return (lhs < rhs) || (lhs == rhs);
 }
 
-//Checks if the const char* is lesser than or equal to the String
+/* Check if the const char* is lesser than or equal to the String */
 bool operator<=(const char* lhs, const String& rhs)
 {
 	return (lhs < rhs) || (lhs == rhs);
 }
 
-//Checks if the String is lesser than or equal to the const char*
+/* Check if the String is lesser than or equal to the const char* */
 bool operator<=(const String& lhs, const char* rhs)
 {
 	return (lhs < rhs) || (lhs == rhs);
 }
 
-//Checks if the first String is greater than the other one
+/* Check if the first String is greater than the other one */
 bool operator>(const String& lhs, const String& rhs) noexcept
 {
 	return !(lhs < rhs) && (lhs != rhs);
 }
 
-//Checks if the const char* is greater than the String
+/* Check if the const char* is greater than the String */
 bool operator>(const char* lhs, const String& rhs)
 {
 	return !(lhs < rhs) && (lhs != rhs);
 }
 
-//Checks if the String is greater than the const char*
+/* Check if the String is greater than the const char* */
 bool operator>(const String& lhs, const char* rhs)
 {
 	return !(lhs < rhs) && (lhs != rhs);
 }
 
-//Checks if the first String is greater than or equal to the second String
+/* Check if the first String is greater than or equal to the second String */
 bool operator>=(const String& lhs, const String& rhs) noexcept
 {
 	return (lhs > rhs) || (lhs == rhs);
 }
 
-//Checks if the const char* is greater than or equal to the String
+/* Check if the const char* is greater than or equal to the String */
 bool operator>=(const char* lhs, const String& rhs)
 {
 	return (lhs > rhs) || (lhs == rhs);
 }
 
-//Checks if the String is greater than or equal to the const char*
+/* Check if the String is greater than or equal to the const char* */
 bool operator>=(const String& lhs, const char* rhs)
 {
 	return (lhs > rhs) || (lhs == rhs);
 }
 
-//Uses void String::swap(String&) to swap Strings contents
+/* Swap the Strings */
 void swap(String& lhs, String& rhs)
 {
 	lhs.swap(rhs);
 }
 
-/* Reads characters into String from the input stream */
+/* Read characters into String from the input stream */
 std::istream& operator>>(std::istream& is, String& str)
 {
 	if (!is)
@@ -2310,7 +2307,7 @@ std::istream& operator>>(std::istream& is, String& str)
 	return is;
 }
 
-//Writes String's contents to output stream
+/* Write String's contents to output stream */
 std::ostream& operator<<(std::ostream& os, const String& str)
 {
 	if (!os)
@@ -2320,7 +2317,7 @@ std::ostream& operator<<(std::ostream& os, const String& str)
 	return os;
 }
 
-/* Reads the entire lines from the input stream, up to the (delim) character into the String */
+/* Read the entire lines from the input stream, up to the delimiter character into the String */
 std::istream& getline(std::istream& is, String& str, char delim)
 {
 	if (!is)
@@ -2332,7 +2329,7 @@ std::istream& getline(std::istream& is, String& str, char delim)
 	return is;
 }
 
-/* Reads the entire lines from the input stream, up to the (delim) character into the String */
+/* Read the entire lines from the input stream, up to the  delimiter character into the String */
 std::istream& getline(std::istream&& is, String& str, char delim)
 {
 	if (!is)
@@ -2344,7 +2341,7 @@ std::istream& getline(std::istream&& is, String& str, char delim)
 	return is;
 }
 
-/* Reads the entire line from the input stream, up to the newline character into the String */
+/* Read the entire line from the input stream, up to the newline character into the String */
 std::istream& getline(std::istream& is, String& str)
 {
 	if (!is)
@@ -2356,7 +2353,7 @@ std::istream& getline(std::istream& is, String& str)
 	return is;
 }
 
-/* Reads the entire line from the input stream, up to the newline character into the String */
+/* Read the entire line from the input stream, up to the newline character into the String */
 std::istream& getline(std::istream&& is, String& str)
 {
 	if (!is)
